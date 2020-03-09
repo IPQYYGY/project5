@@ -7,10 +7,24 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.project5.dao.IAuctionrecordDao;
+import com.accp.project5.pojo.Auction;
+import com.accp.project5.pojo.AuctionRecord;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED, readOnly = true)
 public class AuctionRecordBiz {
 	@Autowired
 	private IAuctionrecordDao dao;
+
+	/**
+	 * 新增拍卖记录
+	 * 
+	 * @param record
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+	public int addAuction(AuctionRecord record) {
+		return dao.insert(record);
+	}
+
 }
