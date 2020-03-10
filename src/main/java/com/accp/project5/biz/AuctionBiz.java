@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.project5.dao.IAuctionDao;
 import com.accp.project5.pojo.Auction;
-import com.accp.project5.pojo.AuctionUser;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 

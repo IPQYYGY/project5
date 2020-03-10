@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@MapperScan(basePackages = { "com.accp.springboot1.dao" })
+@MapperScan(basePackages = { "com.accp.project5.dao" })
 public class BeansConfig {
 	
 }
