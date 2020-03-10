@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.accp.project5;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ class Project5ApplicationTests {
 
 	@Test
 	void contextLoads() {
-     biz.findBypage(1,3);
+		biz.findBypage(1, 3);
 	}
 
 }
