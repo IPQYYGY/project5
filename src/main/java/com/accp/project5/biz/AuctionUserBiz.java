@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.project5.dao.IAuctionuserDao;
-import com.accp.project5.pojo.AuctionUser;
+import com.accp.project5.pojo.Auctionuser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
@@ -20,8 +20,8 @@ public class AuctionUserBiz {
 	/**
 	 * 登录
 	 */
-	public AuctionUser findLogin(String name, String pwd) {
-		QueryWrapper<AuctionUser> qw = Wrappers.query();
+	public Auctionuser findLogin(String name, String pwd) {
+		QueryWrapper<Auctionuser> qw = Wrappers.query();
 		qw.eq("username", name).eq("userPassword", pwd);
 		return dao.selectOne(qw);
 	}
@@ -33,7 +33,7 @@ public class AuctionUserBiz {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
-	public int addUser(AuctionUser user) {
+	public int addUser(Auctionuser user) {
 		return dao.insert(user);
 	}
 }

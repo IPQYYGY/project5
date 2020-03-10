@@ -1,5 +1,6 @@
 package com.accp.project5.action;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.accp.project5.biz.AuctionBiz;
 import com.accp.project5.pojo.Auction;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
 @RestController
@@ -22,6 +24,26 @@ import com.github.pagehelper.PageInfo;
 public class AuctionAction {
 	@Autowired
 	private AuctionBiz biz;
+
+	/**
+	 * 根据条件查询并分页
+	 * 
+	 * @param pageNum
+	 * @param pageSize
+	 * @param shoppingname
+	 * @param shoppingdes
+	 * @param startdata
+	 * @param enddata
+	 * @param price
+	 * @return
+	 */
+	@GetMapping("/{pageNum}/{pageSize}/{shoppingname}/{shoppingdes}/{startdata}/{enddata}/{price}")
+	public PageInfo<Auction> queryByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize,
+			@PathVariable String shoppingname, @PathVariable String shoppingdes, @PathVariable String startdata,
+			@PathVariable String enddata, @PathVariable Integer price) {
+		System.out.println(shoppingname + "=" + shoppingdes + "=" + startdata + "=" + enddata + "=" + price);
+		return biz.findBypages(pageNum, pageSize, shoppingname, shoppingdes, startdata, enddata, price);
+	}
 
 	/**
 	 * 查询所有并分页
@@ -43,7 +65,8 @@ public class AuctionAction {
 	 */
 	@PostMapping
 	public Map<String, Object> addAuction(@RequestBody Auction auction) {
-		int i = biz.addAuction(auction);
+		int i = 0/* biz.addAuction(auction) */;
+		System.out.println(JSON.toJSON(auction));
 		Map<String, Object> message = new HashMap<String, Object>();
 		if (i > 0) {
 			message.put("code", "200");

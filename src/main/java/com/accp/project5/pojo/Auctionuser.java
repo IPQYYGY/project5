@@ -3,7 +3,7 @@ package com.accp.project5.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-public class AuctionUser {
+public class Auctionuser {
 	@TableId(value = "userid", type = IdType.AUTO)
 	private Integer userid;
 	private String username;
@@ -16,11 +16,11 @@ public class AuctionUser {
 	private String userquestion;
 	private String useranswer;
 
-	public AuctionUser() {
+	public Auctionuser() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AuctionUser(Integer userid, String username, String userpassword, String usercardno, String usertel,
+	public Auctionuser(Integer userid, String username, String userpassword, String usercardno, String usertel,
 			String useraddress, String userpostnumber, Integer userisadmin, String userquestion, String useranswer) {
 		super();
 		this.userid = userid;

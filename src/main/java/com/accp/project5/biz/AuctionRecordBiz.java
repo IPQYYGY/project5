@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.project5.dao.IAuctionrecordDao;
 import com.accp.project5.pojo.Auction;
-import com.accp.project5.pojo.AuctionRecord;
+import com.accp.project5.pojo.Auctionrecord;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED, readOnly = true)
@@ -23,7 +23,7 @@ public class AuctionRecordBiz {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
-	public int addAuction(AuctionRecord record) {
+	public int addAuction(Auctionrecord record) {
 		return dao.insert(record);
 	}
 

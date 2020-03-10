@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.project5.dao.IAuctionDao;
 import com.accp.project5.pojo.Auction;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -27,6 +29,35 @@ public class AuctionBiz {
 	public PageInfo<Auction> findBypage(Integer pageNum, Integer pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		return new PageInfo<>(dao.selectList(null));
+	}
+
+	/**
+	 * 根据查询所有并分页
+	 * 
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public PageInfo<Auction> findBypages(Integer pageNum, Integer pageSize, String shoppingname, String shoppingdes,
+			String startdata, String enddata, Integer price) {
+		PageHelper.startPage(pageNum, pageSize);
+		QueryWrapper<Auction> qw = Wrappers.query();
+		if (!shoppingname.equals("null")) {
+			qw.like("auctionname", shoppingname);
+		}
+		if (!shoppingdes.equals("null")) {
+			qw.like("auctiondesc", shoppingdes);
+		}
+		if (!startdata.equals("null")) {
+			qw.gt("auctionstarttime", startdata);
+		}
+		if (!enddata.equals("null")) {
+			qw.lt("auctionendtime", enddata);
+		}
+		if (price != -1) {
+			qw.eq("auctionstartprice", price);
+		}
+		return new PageInfo<>(dao.selectList(qw));
 	}
 
 	/**

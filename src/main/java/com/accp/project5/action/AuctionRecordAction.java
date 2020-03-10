@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accp.project5.biz.AuctionRecordBiz;
-import com.accp.project5.pojo.AuctionRecord;
+import com.accp.project5.pojo.Auctionrecord;
 
 @RestController
 @RequestMapping("/api/auctionrecord")
@@ -25,7 +25,7 @@ public class AuctionRecordAction {
 	 * @return
 	 */
 	@PostMapping
-	public Map<String, Object> addUser(@RequestBody AuctionRecord record) {
+	public Map<String, Object> addUser(@RequestBody Auctionrecord record) {
 		int i = biz.addAuction(record);
 		Map<String, Object> message = new HashMap<String, Object>();
 		if (i > 0) {

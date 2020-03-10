@@ -6,7 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-public class AuctionRecord {
+public class Auctionrecord {
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 	private Integer auctionid;
@@ -15,11 +15,11 @@ public class AuctionRecord {
 	private Date auctiontime;
 	private Integer auctionprice;
 
-	public AuctionRecord() {
+	public Auctionrecord() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AuctionRecord(Integer id, Integer auctionid, Integer userid, Date auctiontime, Integer auctionprice) {
+	public Auctionrecord(Integer id, Integer auctionid, Integer userid, Date auctiontime, Integer auctionprice) {
 		super();
 		this.id = id;
 		this.auctionid = auctionid;
