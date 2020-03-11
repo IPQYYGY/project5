@@ -20,9 +20,9 @@ public class AuctionUserBiz {
 	/**
 	 * 登录
 	 */
-	public Auctionuser findLogin(String name, String pwd) {
+	public Auctionuser findLogin(String name, String pwd,Integer type) {
 		QueryWrapper<Auctionuser> qw = Wrappers.query();
-		qw.eq("username", name).eq("userPassword", pwd);
+		qw.eq("username", name).eq("userPassword", pwd).eq("userisadmin", type);
 		return dao.selectOne(qw);
 	}
 

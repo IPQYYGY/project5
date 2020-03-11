@@ -29,19 +29,9 @@ public class AuctionUserAction {
 	/**
 	 * 登录
 	 */
-	@GetMapping("/{name}/{pwd}")
-	public Map<String, Object> findLogin(@PathVariable String name, @PathVariable String pwd, HttpSession session) {
-		Auctionuser user = biz.findLogin(name, pwd);
-		Map<String, Object> message = new HashMap<String, Object>();
-		if (user != null) {
-			session.setAttribute("student", user);
-			message.put("code", "200");
-			message.put("msg", "ok");
-		} else {
-			message.put("code", "400");
-			message.put("msg", "no");
-		}
-		return message;
+	@GetMapping("/{name}/{pwd}/{type}")
+	public Auctionuser findLogin(@PathVariable String name, @PathVariable String pwd,@PathVariable Integer type) {
+		return biz.findLogin(name, pwd,type);
 	}
 
 	/**

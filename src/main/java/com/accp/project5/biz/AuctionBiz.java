@@ -1,5 +1,8 @@
 package com.accp.project5.biz;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -8,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.project5.dao.IAuctionDao;
 import com.accp.project5.pojo.Auction;
+import com.accp.project5.vo.AuctionVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.pagehelper.PageHelper;
@@ -20,6 +24,34 @@ public class AuctionBiz {
 	private IAuctionDao dao;
 
 	/**
+	 * 查询拍卖结束的拍卖纪录
+	 * 
+	 * @return
+	 */
+	public List<AuctionVo> findEnd() {
+		return dao.queryEndList(new Date());
+	}
+
+	/**
+	 * 查询正在拍卖的拍卖纪录
+	 * 
+	 * @return
+	 */
+	public List<AuctionVo> findStart() {
+		return dao.queryStartList(new Date());
+	}
+
+	/**
+	 * 具体查询
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Auction findById(Integer id) {
+		return dao.selectById(id);
+	}
+
+	/**
 	 * 查询所有并分页
 	 * 
 	 * @param pageNum
@@ -28,7 +60,9 @@ public class AuctionBiz {
 	 */
 	public PageInfo<Auction> findBypage(Integer pageNum, Integer pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		return new PageInfo<>(dao.selectList(null));
+		QueryWrapper<Auction> qw = Wrappers.query();
+		qw.gt("auctionendtime", new Date());
+		return new PageInfo<>(dao.selectList(qw));
 	}
 
 	/**
@@ -57,6 +91,7 @@ public class AuctionBiz {
 		if (price != -1) {
 			qw.eq("auctionstartprice", price);
 		}
+		qw.gt("auctionendtime", new Date());
 		return new PageInfo<>(dao.selectList(qw));
 	}
 
@@ -90,6 +125,6 @@ public class AuctionBiz {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public int removeAuction(Integer id) {
-		return dao.deleteById(id);
+		return dao.delById(id);
 	}
 }

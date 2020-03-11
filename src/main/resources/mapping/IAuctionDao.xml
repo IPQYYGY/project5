@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.project5.dao.IAuctionDao">
+	<resultMap id="BaseResultMap"
+		type="com.accp.project5.vo.AuctionVo">
+		<result column="auctionName" property="auctionname"
+			jdbcType="VARCHAR" />
+		<result column="auctionStartPrice" property="auctionstartprice"
+			jdbcType="INTEGER" />
+		<result column="auctionTime" property="auctiontime"
+			jdbcType="DATE" />
+		<result column="auctionEndTime" property="auctionendtime"
+			jdbcType="DATE" />
+		<result column="auctionPrice" property="auctionprice"
+			jdbcType="INTEGER" />
+		<result column="userName" property="username"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="BaseResultMap1"
+		type="com.accp.project5.vo.AuctionVo">
+		<result column="auctionName" property="auctionname"
+			jdbcType="VARCHAR" />
+		<result column="auctionStartPrice" property="auctionstartprice"
+			jdbcType="INTEGER" />
+		<result column="auctionStartTime" property="auctionstarttime"
+			jdbcType="DATE" />
+		<result column="auctionEndTime" property="auctionendtime"
+			jdbcType="DATE" />
+		<collection property="record" ofType="AuctionVo">
+			<result column="userName" property="username" />
+			<result column="auctionPrice" property="auctionprice" />
+		</collection>
+	</resultMap>
+	<select id="queryEndList" resultMap="BaseResultMap">
+		SELECT t.userName AS
+		userName,auctionName,auctionStartTime,auctionEndTime,auctionStartPrice,t.price
+		AS auctionPrice FROM auctionrecord r INNER JOIN
+		(SELECT
+		u.userId,userName,MAX(auctionPrice) AS price FROM auctionrecord r
+		INNER JOIN auctionuser u ON r.userId=u.userId)AS t ON
+		t.userId=r.userId
+		INNER JOIN auction a ON a.auctionId=r.auctionId WHERE
+		a.auctionEndTime
+		&lt;#{time}
+	</select>
+	<select id="queryStartList" resultMap="BaseResultMap1">
+		SELECT
+		userName,auctionName,auctionStartTime,auctionEndTime,auctionStartPrice,auctionPrice
+		FROM auctionrecord r LEFT JOIN
+		auctionuser u ON r.userId=u.userId LEFT
+		JOIN auction a ON a.auctionId=r.auctionId
+		WHERE
+		a.auctionEndTime&gt;#{time}
+	</select>
+	<delete id="delById">
+		delete from
+		auction
+		where
+		auctionId = #{id};
+		delete from
+		auctionrecord
+		where auctionId =
+		#{id};
+	</delete>
+</mapper>

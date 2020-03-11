@@ -1,7 +1,7 @@
 package com.accp.project5.action;
 
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.accp.project5.biz.AuctionBiz;
 import com.accp.project5.pojo.Auction;
+import com.accp.project5.vo.AuctionVo;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
@@ -24,6 +25,37 @@ import com.github.pagehelper.PageInfo;
 public class AuctionAction {
 	@Autowired
 	private AuctionBiz biz;
+
+	/**
+	 * 查询拍卖结束的拍卖纪录
+	 * 
+	 * @return
+	 */
+	@GetMapping
+	public List<AuctionVo> queryEnd() {
+		return biz.findEnd();
+	}
+
+	/**
+	 * 查询正在拍卖的拍卖纪录
+	 * 
+	 * @return
+	 */
+	@GetMapping("aut")
+	public List<AuctionVo> queryStart() {
+		return biz.findStart();
+	}
+
+	/**
+	 * 查询具体
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/{id}")
+	public Auction queryById(@PathVariable Integer id) {
+		return biz.findById(id);
+	}
 
 	/**
 	 * 根据条件查询并分页
@@ -41,7 +73,6 @@ public class AuctionAction {
 	public PageInfo<Auction> queryByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize,
 			@PathVariable String shoppingname, @PathVariable String shoppingdes, @PathVariable String startdata,
 			@PathVariable String enddata, @PathVariable Integer price) {
-		System.out.println(shoppingname + "=" + shoppingdes + "=" + startdata + "=" + enddata + "=" + price);
 		return biz.findBypages(pageNum, pageSize, shoppingname, shoppingdes, startdata, enddata, price);
 	}
 
@@ -65,8 +96,7 @@ public class AuctionAction {
 	 */
 	@PostMapping
 	public Map<String, Object> addAuction(@RequestBody Auction auction) {
-		int i = 0/* biz.addAuction(auction) */;
-		System.out.println(JSON.toJSON(auction));
+		int i = biz.addAuction(auction);
 		Map<String, Object> message = new HashMap<String, Object>();
 		if (i > 0) {
 			message.put("code", "200");
